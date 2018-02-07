@@ -5,8 +5,8 @@ module Verify
       module Schema
         HUB = JSON.parse <<JSON
 {
-  "title":"IDP",
-  "description":"The necessary configuration for an IDP",
+  "title":"HUB",
+  "description":"The necessary configuration for a HUB",
   "type":"object",
   "required": ["id", "entity_id", "assertion_consumer_service_uri", "organization", "signing_certificates", "encryption_certificate"],
   "definitions": {

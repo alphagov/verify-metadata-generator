@@ -30,6 +30,10 @@ module Verify
             hub_entity_descriptor = hub_metadata_provider.provide(environment, valid_until)
             validator.validate([hub_entity_descriptor])
             metadata_content = aggregator.generate_metadata_content(hub_entity_descriptor)
+          elsif options.is_proxy_node
+            proxy_node_entity_descriptor = idp_metadata_provider.provide(environment, valid_until).first
+            validator.validate([proxy_node_entity_descriptor])
+            metadata_content = aggregator.generate_metadata_content(proxy_node_entity_descriptor)
           else
             hub_entity_descriptor = hub_metadata_provider.provide(environment)
             idp_entity_descriptors = idp_metadata_provider.provide(environment)

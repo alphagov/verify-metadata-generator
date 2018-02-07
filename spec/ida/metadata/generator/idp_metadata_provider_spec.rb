@@ -21,8 +21,8 @@ module Verify
             expect(fake_yaml_loader).to receive(:load).with("test_env/idps/*.yml").and_return([LoadedYaml.new(an_idp_hash, double(:name)), LoadedYaml.new(an_other_idp_hash, double(:name))])
             expect(an_idp_hash).to receive(:[]).with("enabled").and_return(true)
             expect(an_other_idp_hash).to receive(:[]).with("enabled").and_return(false)
-            expect(fake_entity_descriptor_converter).to receive(:generate).with(an_idp_hash).and_return(converted_idp)
-            expect(fake_entity_descriptor_converter).to_not receive(:generate).with(an_other_idp_hash)
+            expect(fake_entity_descriptor_converter).to receive(:generate).with(an_idp_hash, nil).and_return(converted_idp)
+            expect(fake_entity_descriptor_converter).to_not receive(:generate).with(an_other_idp_hash, nil)
             expect(fake_schema_validator).to receive(:validate!)
             metadata = IdpMetadataProvider.new(fake_yaml_loader, fake_schema_validator, fake_entity_descriptor_converter).provide(environment)
             expect(metadata).to eq [converted_idp]
@@ -46,7 +46,7 @@ module Verify
           converted_idp = double(:converted_idp)
           expect(fake_yaml_loader).to receive(:load).with("test_env/idps/*.yml").and_return([LoadedYaml.new(an_idp_hash, double(:name))])
           expect(an_idp_hash).to receive(:[]).with("enabled").and_return(true)
-          expect(fake_entity_descriptor_converter).to receive(:generate).with(an_idp_hash).and_return(converted_idp)
+          expect(fake_entity_descriptor_converter).to receive(:generate).with(an_idp_hash, nil).and_return(converted_idp)
           expect(fake_schema_validator).to receive(:validate!)
           metadata = IdpMetadataProvider.new(fake_yaml_loader, fake_schema_validator, fake_entity_descriptor_converter).provide(environment)
           expect(metadata).to eq [converted_idp]
