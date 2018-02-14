@@ -3,7 +3,7 @@ module Verify
   module Metadata
     module Generator
       class ArgumentsParser
-        Options = Struct.new(:environments, :input_directory, :write_file, :is_connector, :output_directory, :valid_until, :idp_ca_files, :hub_ca_files) do
+        Options = Struct.new(:environments, :input_directory, :write_file, :is_connector, :is_proxy_node, :output_directory, :valid_until, :idp_ca_files, :hub_ca_files) do
           def validate!
             raise "environment must be set!" if environments.empty?
           end
@@ -13,6 +13,7 @@ module Verify
           options = Options.new
           options.write_file = false
           options.is_connector = false
+          options.is_proxy_node = false
           options.output_directory = File.absolute_path(Dir.pwd)
           options.environments = []
           options.idp_ca_files = []
@@ -23,6 +24,10 @@ module Verify
 
             opts.on("-r", "--connector", "the environment is for eIDAS connector") do
               options.is_connector = true
+            end
+
+            opts.on("-p", "--proxy-node", "the environment is for eIDAS proxy node") do
+              options.is_proxy_node = true
             end
 
             opts.on("-eENVIRONMENT", "--env=ENVIRONMENT", String, "environment to generate metadata for") do |env|

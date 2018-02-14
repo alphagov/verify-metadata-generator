@@ -24,7 +24,7 @@ Feature: Validates Hub Input
     And the stderr should contain
     """
     file with name 'hub.yml' had the following errors:
-    The property '#/' of type null did not match the following type: object in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
+    The property '#/' of type null did not match the following type: object in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
     """
 
   Scenario: When the input file is missing keys
@@ -40,12 +40,12 @@ Feature: Validates Hub Input
     And the stderr should contain
     """
     file with name 'hub.yml' had the following errors:
-    The property '#/' did not contain a required property of 'id' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
-    The property '#/' did not contain a required property of 'entity_id' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
-    The property '#/' did not contain a required property of 'assertion_consumer_service_uri' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
-    The property '#/' did not contain a required property of 'organization' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
-    The property '#/' did not contain a required property of 'signing_certificates' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
-    The property '#/' did not contain a required property of 'encryption_certificate' in schema 63bfb93a-fc9f-5141-a13f-0f81f5fdfeef
+    The property '#/' did not contain a required property of 'id' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
+    The property '#/' did not contain a required property of 'entity_id' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
+    The property '#/' did not contain a required property of 'assertion_consumer_service_uri' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
+    The property '#/' did not contain a required property of 'organization' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
+    The property '#/' did not contain a required property of 'signing_certificates' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
+    The property '#/' did not contain a required property of 'encryption_certificate' in schema 279b5ef1-bb4b-53ad-a771-a9ccfa980996
     """
 
   Scenario: When the IDP has a bad certificate

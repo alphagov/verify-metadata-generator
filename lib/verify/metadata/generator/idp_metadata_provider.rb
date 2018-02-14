@@ -18,7 +18,7 @@ module Verify
           @schema_validator = schema_validator
         end
 
-        def provide(environment)
+        def provide(environment, valid_until = nil)
           idp_yaml = @idp_yaml_loader.load(File.join(environment, "idps", "*.yml"))
           if idp_yaml.empty?
             raise IdpMetadataNotFoundError, "No IDP metadata source files were found in #{environment}"
@@ -31,7 +31,7 @@ module Verify
             raise NoEnabledIdpMetadataError, "No enabled IDPs were found for #{environment}"
           end
           enabled_idps.map { |idp|
-            @idp_source_to_entity_descriptor.generate(idp.yaml)
+            @idp_source_to_entity_descriptor.generate(idp.yaml, valid_until)
           }
         end
       end
@@ -43,14 +43,14 @@ module Verify
           @store_provider = store_provider
         end
 
-        def generate(idp_data)
+        def generate(idp_data, valid_until = nil)
           store = @store_provider.provide
           signing_certs = idp_data['signing_certificates'].each_with_index.map{|cert_data, i|
             name = "#{USE}_#{i + 1}"
             Certificate.new(name, USE, cert_data['x509'], store)
           }
           idp_descriptor = IdpDescriptor.new(signing_certs, idp_data['sso_uri'])
-          return EntityDescriptor.new(idp_data['id'], idp_data['entity_id'], idp_descriptor, Organization.new(*idp_data['organization'].values_at('name', 'display_name', 'url')))
+          EntityDescriptor.new(idp_data['id'], idp_data['entity_id'], idp_descriptor, Organization.new(*idp_data['organization'].values_at('name', 'display_name', 'url')), valid_until)
         end
       end
 

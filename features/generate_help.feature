@@ -9,6 +9,7 @@ Feature: generate help
       """
       Usage: generate_metadata [options]
           -r, --connector                  the environment is for eIDAS connector
+          -p, --proxy-node                 the environment is for eIDAS proxy node
           -e, --env=ENVIRONMENT            environment to generate metadata for
           -cDIRECTORY                      the input directory to use
           -w                               write the metadata to a file at ENVIRONMENT/metadata.xml
