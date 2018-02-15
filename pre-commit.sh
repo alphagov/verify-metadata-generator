@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 function exit_unless {
     exit_code=$1
     if [ ${exit_code} -ne 0 ]
