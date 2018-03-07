@@ -1,6 +1,6 @@
-# IDA Metadata Generator
+# Verify Metadata Generator
 
-This tool produces unsigned SAML metadata that can be used to describe the entities within the GOV.UK Verify federation. It is intended to be used as part of the larger IDA metadata pipeline.
+This tool produces unsigned SAML metadata that can be used to describe the entities within the GOV.UK Verify federation. It is intended to be used as part of the larger Verify metadata pipeline.
 
 ## Installation
 
@@ -55,3 +55,13 @@ The tool currently expects input in the following layout:
 ```
 
 An example input directory layout with an environment named `example_environment` is viewable with [/examples](examples)
+
+## Responsible disclosure
+
+If you think you have discovered a security issue in this code please email [disclosure@digital.cabinet-office.gov.uk](mailto:disclosure@digital.cabinet-office.gov.uk) with details.
+
+For non-security related bugs and feature requests please [raise an issue](https://github.com/alphagov/verify-metadata-generator/issues/new) in the GitHub issue tracker.
+
+## Licence
+
+[LICENCE](LICENCE)
