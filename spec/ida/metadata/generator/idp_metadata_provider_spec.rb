@@ -56,50 +56,50 @@ module Verify
       class IdpMetadataProvider
         describe IdpSourceToEntityDescriptorConverter do
           it "correctly creates a single entity descriptor from a config file" do
-            id = 'experian'
-            entity_id = 'http://stub_idp.acme.org/experian/SSO/POST'
-            sso_uri = 'https://idp-stub-staging.ida.digital.cabinet-office.gov.uk:443/experian/SAML2/SSO'
+            id = 'stub-idp-one'
+            entity_id = 'http://stub_idp.acme.org/stub-idp-one/SSO/POST'
+            sso_uri = 'https://idp-stub-staging.ida.digital.cabinet-office.gov.uk:443/stub-idp-one/SAML2/SSO'
             source_data = {
-              'entity_id' => 'http://stub_idp.acme.org/experian/SSO/POST',
+              'entity_id' => 'http://stub_idp.acme.org/stub-idp-one/SSO/POST',
               'organization' => {
-              'name' => 'experian',
-              'display_name' => 'Experian',
-              'url' => 'http://experian.com',
+              'name' => 'stub-idp-one',
+              'display_name' => 'Stub IDP One',
+              'url' => 'http://stub-idp-one.test',
             },
             'sso_uri' => sso_uri,
-            'id' => 'experian',
+            'id' => 'stub-idp-one',
             'enabled' => true,
             'signing_certificates' => [{'x509' => encoded_certificate }]
             }
             store = double(:store)
             signing_certificates = [Certificate.new('signing_1', 'signing', encoded_certificate, store)]
             idp_descriptor = IdpDescriptor.new(signing_certificates, sso_uri)
-            expected_descriptor = EntityDescriptor.new(id, entity_id, idp_descriptor, Organization.new('experian', 'Experian', 'http://experian.com'))
+            expected_descriptor = EntityDescriptor.new(id, entity_id, idp_descriptor, Organization.new('stub-idp-one', 'Stub IDP One', 'http://stub-idp-one.test'))
             fake_store_loader = double(:fake_store_loader)
             expect(fake_store_loader).to receive(:provide).and_return(store)
             expect(IdpSourceToEntityDescriptorConverter.new(fake_store_loader).generate(source_data)).to eq expected_descriptor
           end
 
           it "correctly creates multiple entity descriptors from a config file" do
-            id = 'experian'
-            entity_id = 'http://stub_idp.acme.org/experian/SSO/POST'
-            sso_uri = 'https://idp-stub-staging.ida.digital.cabinet-office.gov.uk:443/experian/SAML2/SSO'
+            id = 'stub-idp-one'
+            entity_id = 'http://stub_idp.acme.org/stub-idp-one/SSO/POST'
+            sso_uri = 'https://idp-stub-staging.ida.digital.cabinet-office.gov.uk:443/stub-idp-one/SAML2/SSO'
             source_data = {
-                'entity_id' => 'http://stub_idp.acme.org/experian/SSO/POST',
+                'entity_id' => 'http://stub_idp.acme.org/stub-idp-one/SSO/POST',
                 'organization' => {
-                    'name' => 'experian',
-                    'display_name' => 'Experian',
-                    'url' => 'http://experian.com',
+                    'name' => 'stub-idp-one',
+                    'display_name' => 'Stub IDP One',
+                    'url' => 'http://stub-idp-one.test',
                 },
                 'sso_uri' => sso_uri,
-                'id' => 'experian',
+                'id' => 'stub-idp-one',
                 'enabled' => true,
                 'signing_certificates' => [{'x509' => encoded_certificate }, {'x509' => encoded_certificate_2 }]
             }
             store = double(:store)
             signing_certificates = [Certificate.new('signing_1', 'signing', encoded_certificate, store), Certificate.new('signing_2', 'signing', encoded_certificate_2, store)]
             idp_descriptor = IdpDescriptor.new(signing_certificates, sso_uri)
-            expected_descriptor = EntityDescriptor.new(id, entity_id, idp_descriptor, Organization.new('experian', 'Experian', 'http://experian.com'))
+            expected_descriptor = EntityDescriptor.new(id, entity_id, idp_descriptor, Organization.new('stub-idp-one', 'Stub IDP One', 'http://stub-idp-one.test'))
             fake_store_loader = double(:fake_store_loader)
             expect(fake_store_loader).to receive(:provide).and_return(store)
             expect(IdpSourceToEntityDescriptorConverter.new(fake_store_loader).generate(source_data)).to eq expected_descriptor
