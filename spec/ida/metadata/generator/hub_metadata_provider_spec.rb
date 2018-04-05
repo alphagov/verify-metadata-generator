@@ -33,16 +33,16 @@ module Verify
 
       describe HubEntityDescriptorGenerator do
         it "stores values correctly" do
-          id = 'experian'
-          entity_id = 'http://stub_idp.acme.org/experian/SSO/POST'
+          id = 'stub-idp-one'
+          entity_id = 'http://stub_idp.acme.org/stub-idp-one/SSO/POST'
           source_data = {
-            'entity_id' => 'http://stub_idp.acme.org/experian/SSO/POST',
+            'entity_id' => 'http://stub_idp.acme.org/stub-idp-one/SSO/POST',
             'organization' => {
-            'name' => 'experian',
-            'display_name' => 'Experian',
-            'url' => 'http://experian.com',
+            'name' => 'stub-idp-one',
+            'display_name' => 'Stub IDP One',
+            'url' => 'http://stub-idp-one.test',
           },
-          'id' => 'experian',
+          'id' => 'stub-idp-one',
           'enabled' => true,
           'signing_certificates' => [{'x509' => encoded_certificate, 'name' => 'signing_1' }],
           'encryption_certificate' => {'x509' => encoded_certificate, 'name' => 'encryption_1' },
@@ -52,7 +52,7 @@ module Verify
           signing_certificates = [Certificate.new('signing_1', 'signing', encoded_certificate, store)]
           encryption_certificate = Certificate.new('encryption_1', 'encryption', encoded_certificate, store)
           role_descriptor = SpDescriptor.new(signing_certificates, encryption_certificate, 'http://foo.com')
-          expected_descriptor = EntityDescriptor.new(id, entity_id, role_descriptor, Organization.new('experian', 'Experian', 'http://experian.com'))
+          expected_descriptor = EntityDescriptor.new(id, entity_id, role_descriptor, Organization.new('stub-idp-one', 'Stub IDP One', 'http://stub-idp-one.test'))
           store_provider = double(:store_provider)
           expect(store_provider).to receive(:provide).and_return store
           expect(HubEntityDescriptorGenerator.new(store_provider).generate(source_data, nil)).to eq expected_descriptor end
