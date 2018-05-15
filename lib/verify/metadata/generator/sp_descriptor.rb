@@ -36,7 +36,13 @@ module Verify
         end
 
         def append_xml(builder)
-          builder["md"].SPSSODescriptor("xmlns:md" => "urn:oasis:names:tc:SAML:2.0:metadata", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "protocolSupportEnumeration" => "urn:oasis:names:tc:SAML:2.0:protocol", "xsi:type"=>"md:SPSSODescriptorType") {
+          builder['md'].SPSSODescriptor(
+            'xmlns:md' => 'urn:oasis:names:tc:SAML:2.0:metadata',
+            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+            'protocolSupportEnumeration' => 'urn:oasis:names:tc:SAML:2.0:protocol',
+            'xsi:type' => 'md:SPSSODescriptorType',
+            'WantAssertionsSigned' => true
+          ) {
             encryption_certificate.append_xml(builder)
             signing_certificates.each { |signing_certificate|
               signing_certificate.append_xml(builder)
