@@ -23,7 +23,7 @@ module Verify
         let(:expected_xml) {
           <<-XML
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="id" entityID="entity" xsi:type="md:EntityDescriptorType">
-  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" xsi:type="md:SPSSODescriptorType">
+  <md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" xsi:type="md:SPSSODescriptorType" WantAssertionsSigned="true">
     <md:KeyDescriptor use="encryption" xsi:type="md:KeyDescriptorType">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xsi:type="ds:KeyInfoType">
         <ds:KeyName xmlns:xs="http://www.w3.org/2001/XMLSchema">encryption</ds:KeyName>
