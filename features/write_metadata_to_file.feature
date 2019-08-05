@@ -22,12 +22,3 @@ Feature: write metadata to file
     When I successfully run `generate_metadata -e local -w --idpCA idp_ca.pem --hubCA hub_ca.pem -o output`
     Then the metadata for local in output will be written to a file
 
-  Scenario: display metadata without IDP when an environment contains a suffix value connector
-    Given there is a environment called local-connector
-    And local-connector has a source file describing the hub with its entity id http://my.entity.id.url
-    And local-connector has no idps defined
-    When I successfully run `generate_metadata --connector -e local-connector --hubCA hub_ca.pem`
-    Then there will be an EntityDescriptor root element
-    #And the EntityDescriptor will be signed by a Hub Metadata Key
-    And the EntityDescriptor will have an entityID matching the url http://my.entity.id.url where the metadata will be hosted
-    And the SSODescriptor will contain the Hub's signing and encryption certificates

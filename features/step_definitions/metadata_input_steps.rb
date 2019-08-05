@@ -7,10 +7,6 @@ Given(/^(\w+-?\w+) has a source file describing the hub$/) do |env|
   write_file_describing_hub(env)
 end
 
-Given(/^(\w+-?\w+) has a source file describing the hub with its entity id (.+)$/) do |env, entity_id|
-  write_file_describing_hub(env, {hub_entity_id: entity_id})
-end
-
 When(/^the metadata is generated for (\w+)$/) do |env|
   write_file("idp_ca.pem", idp_pki.root_ca.to_pem)
   write_file("hub_ca.pem", hub_pki.root_ca.to_pem)
@@ -59,10 +55,6 @@ Given(/^(\w+) has some idps defined$/) do |env|
   write_default_idps(env)
 end
 
-And(/^(\w+-?\w+) has no idps defined$/) do |env|
-
-end
-
 Given(/^(\w+) has a source file describing an IDP called (\w+) with content:$/) do |env, idp_name, idp_source|
   write_idp_file(env, idp_name, idp_source)
 end
@@ -89,23 +81,4 @@ Then(/^(\w+) will have a IDPSSODescriptor$/) do |entity_id, table|
   attributes = table.hashes.first
   expect(doc.xpath("//EntityDescriptor[@entityID='#{entity_id}']/IDPSSODescriptor/SingleSignOnService")[0]["Location"]).to eql attributes["sso_uri"]
   expect(doc.xpath("//EntityDescriptor[@entityID='#{entity_id}']/IDPSSODescriptor/KeyDescriptor/KeyInfo/KeyName/text()")[0].to_s).to eql attributes["name"]
-end
-
-And(/^there will be an EntityDescriptor root element$/) do
-  doc = Nokogiri::XML::Document.parse(all_output)
-  expect(doc.xpath('/md:EntityDescriptor[@validUntil]').size).to eql(1)
-  expect(doc.xpath('/md:EntityDescriptor/@validUntil').to_s).to_not be_empty
-end
-
-And(/^the EntityDescriptor will have an entityID matching the url (.+) where the metadata will be hosted$/) do | url |
-  doc = Nokogiri::XML::Document.parse(all_output)
-  expect(doc.xpath('/md:EntityDescriptor/@entityID').to_s).to eql(url)
-end
-
-And(/^the SSODescriptor will contain the Hub's signing and encryption certificates$/) do
-  doc = Nokogiri::XML::Document.parse(all_output)
-  doc.remove_namespaces!
-  expect(doc.xpath("/EntityDescriptor/SPSSODescriptor/KeyDescriptor[@use='encryption']//X509Certificate/text()").to_s).to eql(@encryption_certificate)
-  expect(doc.xpath("/EntityDescriptor/SPSSODescriptor/KeyDescriptor[@use='signing' and KeyInfo/KeyName[text() = 'signing_one']]//X509Certificate/text()").to_s).to eql(@signing_one_certificate)
-  expect(doc.xpath("/EntityDescriptor/SPSSODescriptor/KeyDescriptor[@use='signing' and KeyInfo/KeyName[text() = 'signing_two']]//X509Certificate/text()").to_s).to eql(@signing_two_certificate)
 end

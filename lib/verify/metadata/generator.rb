@@ -26,21 +26,11 @@ module Verify
         valid_until = DateTime.now + options.valid_until
         xsd_validator = XsdValidator.new(METADATA_XSD)
         options.environments.each do |environment|
-          if options.is_connector
-            hub_entity_descriptor = hub_metadata_provider.provide(environment, valid_until)
-            validator.validate([hub_entity_descriptor])
-            metadata_content = aggregator.generate_metadata_content(hub_entity_descriptor)
-          elsif options.is_proxy_node
-            proxy_node_entity_descriptor = idp_metadata_provider.provide(environment, valid_until).first
-            validator.validate([proxy_node_entity_descriptor])
-            metadata_content = aggregator.generate_metadata_content(proxy_node_entity_descriptor)
-          else
-            hub_entity_descriptor = hub_metadata_provider.provide(environment)
-            idp_entity_descriptors = idp_metadata_provider.provide(environment)
-            entity_descriptors = [hub_entity_descriptor] + idp_entity_descriptors
-            validator.validate(entity_descriptors)
-            metadata_content = aggregator.aggregate(entity_descriptors, valid_until)
-          end
+          hub_entity_descriptor = hub_metadata_provider.provide(environment)
+          idp_entity_descriptors = idp_metadata_provider.provide(environment)
+          entity_descriptors = [hub_entity_descriptor] + idp_entity_descriptors
+          validator.validate(entity_descriptors)
+          metadata_content = aggregator.aggregate(entity_descriptors, valid_until)
           xsd_validator.validate!(metadata_content)
           metadata_writer.write(metadata_content, environment)
         end
