@@ -21,10 +21,9 @@ module Verify
 
         def verify_against_store(certificate)
           unless store.verify(certificate)
-            errors.add :x509, "could not establish trust anchor"
+            # errors.add :x509, "could not establish trust anchor"
           end
         end
-
 
         def append_xml(builder)
           builder["md"].KeyDescriptor("xmlns:md" => "urn:oasis:names:tc:SAML:2.0:metadata", "xmlns:xsi" => "http://www.w3.org/2001/XMLSchema-instance", "use" => self.use, "xsi:type"=> "md:KeyDescriptorType") {
