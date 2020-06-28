@@ -41,7 +41,8 @@ module Verify
             'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
             'protocolSupportEnumeration' => 'urn:oasis:names:tc:SAML:2.0:protocol',
             'xsi:type' => 'md:SPSSODescriptorType',
-            'WantAssertionsSigned' => true
+            'WantAssertionsSigned' => true,
+            'AuthnRequestsSigned' => true
           ) {
             encryption_certificate.append_xml(builder)
             signing_certificates.each { |signing_certificate|
