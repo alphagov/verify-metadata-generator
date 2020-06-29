@@ -34,8 +34,10 @@ module Verify
                 builder.X509Certificate(self.x509)
               }
             }
-            builder["md"].EncryptionMethod("Algorithm" => "http://www.w3.org/2009/xmlenc11#aes256-gcm")
-            builder["md"].EncryptionMethod("Algorithm" => "http://www.w3.org/2009/xmlenc11#aes128-gcm")
+            if self.use == 'encryption'
+              builder["md"].EncryptionMethod("Algorithm" => "http://www.w3.org/2009/xmlenc11#aes256-gcm")
+              builder["md"].EncryptionMethod("Algorithm" => "http://www.w3.org/2009/xmlenc11#aes128-gcm")
+            end
           }
         end
       end
