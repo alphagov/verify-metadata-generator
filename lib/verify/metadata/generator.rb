@@ -24,14 +24,15 @@ module Verify
         metadata_writer = MetadataWriter.new(options)
         validator = EntityDescriptorValidator.new
         valid_until = DateTime.now + options.valid_until
+        valid_until_eidas = DateTime.parse("2021-09-01")
         xsd_validator = XsdValidator.new(METADATA_XSD)
         options.environments.each do |environment|
           if options.is_connector
-            hub_entity_descriptor = hub_metadata_provider.provide(environment, valid_until)
+            hub_entity_descriptor = hub_metadata_provider.provide(environment, valid_until_eidas)
             validator.validate([hub_entity_descriptor])
             metadata_content = aggregator.generate_metadata_content(hub_entity_descriptor)
           elsif options.is_proxy_node
-            proxy_node_entity_descriptor = idp_metadata_provider.provide(environment, valid_until).first
+            proxy_node_entity_descriptor = idp_metadata_provider.provide(environment, valid_until_eidas).first
             validator.validate([proxy_node_entity_descriptor])
             metadata_content = aggregator.generate_metadata_content(proxy_node_entity_descriptor)
           else
