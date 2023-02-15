@@ -1,4 +1,4 @@
-FROM ruby:2.6.7-alpine
+FROM ruby:2.7.7-alpine
 
 RUN apk update
 RUN apk add git
