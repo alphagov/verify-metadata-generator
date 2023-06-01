@@ -1,5 +1,9 @@
 # Verify Metadata Generator
 
+>**GOV.UK Verify has closed**
+>
+>This repository is out of date and has been archived
+
 This tool produces unsigned SAML metadata that can be used to describe the entities within the GOV.UK Verify federation. It is intended to be used as part of the larger Verify metadata pipeline.
 
 ## Installation
